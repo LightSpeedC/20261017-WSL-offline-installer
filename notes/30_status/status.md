@@ -14,14 +14,16 @@
 
 計画: [WSL オフラインインストーラ 計画](../10_plan/p261017-01-WSLオフラインインストーラ.md)（p261017-01）
 
-初期化まで済み。次は `build/fetch-wsl.ps1`。
+リポジトリ: [LightSpeedC/20261017-WSL-offline-installer](https://github.com/LightSpeedC/20261017-WSL-offline-installer)（public、develop）
+
+初期化・README・ローカルルール・`build/fetch-wsl.ps1` まで済み。次は `build/fetch-drivers.ps1`。
 
 ## 2. 実装の進み具合
 
 | 順 | 作業 | 状態 |
 |---|---|---|
 | 1 | 初期化（git・.gitignore・文字コード定義） | ✅ **済** |
-| 2 | `build/fetch-wsl.ps1`（最新の WSL msi を取得） | ⬜ **未** |
+| 2 | `build/fetch-wsl.ps1`（最新の WSL msi を取得）。2026-10-17 の実行で 3.0.3 を取得、SHA-256 は GitHub の digest と一致、署名は Microsoft で有効 | ✅ **済** |
 | 3 | `build/fetch-drivers.ps1`（NVIDIA・Intel の Windows 用ドライバ） | ⬜ **未** |
 | 4 | `build/prepare-distro.ps1`（Ubuntu・apt・nvm・Node.js・AI エージェント） | ⬜ **未** |
 | 5 | llama-server の 3 通りのビルド（CPU・CUDA・SYCL） | ⬜ **未** |
