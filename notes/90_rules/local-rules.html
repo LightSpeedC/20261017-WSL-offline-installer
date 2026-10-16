@@ -6,6 +6,8 @@
 <title>WSL オフラインインストーラ ローカルルール</title>
 <style>
 :root{--navy1:#12224d;--navy2:#2f5fbf;--ink:#1c2330;--ink-soft:#4a5568;--line:#d9dfe8;--code-bg:#f4f6fa;--accent:var(--navy1);--accent2:var(--navy2);--soft:#f2f5fb;}
+.ch01{--accent:hsl(280,78%,25%);--accent2:hsl(280,58%,55%);--soft:hsl(280,28%,95%);}
+.minibar{margin:26px 0 0;padding:8px 20px;border-radius:8px;font-weight:700;color:#fff;background:linear-gradient(135deg,var(--navy1,#12224d),var(--navy2,#2f5fbf));}
 body{margin:0;font-family:"Segoe UI","Yu Gothic UI",Meiryo,sans-serif;font-size:15.5px;line-height:1.85;color:var(--ink);background:#fff;}
 .titlebar{background:linear-gradient(135deg,var(--navy1,#12224d),var(--navy2,#2f5fbf));color:#fff;padding:34px 30px 30px;}
 .titlebar .inner{max-width:1600px;margin:0 auto;}
@@ -28,7 +30,9 @@ a.back-home{display:inline-block;padding:2px 10px;border-radius:6px;color:#fff;b
 <div class="wrap">
 <a class="back-home" href="../../README.html" title="README へ">⌂</a>
 
-<section id="commit-push">
+<div class="minibar">共通ルールを上書きする決めごと</div>
+
+<section class="ch01" id="ch01">
 <h1>commit・push は適切な単位で進める</h1>
 <p><strong>上書きする共通ルール</strong>: 「修正は1点ずつ、確認を重視」「重大な操作の確認方法」「リモートリポジトリの作成・push」の、commit・push を明示の指示まで待つ部分。</p>
 <ul>
