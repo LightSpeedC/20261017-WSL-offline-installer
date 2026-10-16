@@ -156,6 +156,8 @@ _releases/   installer と bundle をまとめた zip（Git には入れない�
 <ul>
 <li>導入先のフォルダと名前は引数で変えられるようにする（既定値は <code>%LOCALAPPDATA%\wsl\Ubuntu-24.04-offline</code> と <code>Ubuntu-24.04</code>）</li>
 <li>何度実行しても同じ結果になるようにする</li>
+<li><code>wsl.exe</code> の出力は UTF-16 のため、そのまま読むと 1 文字おきに空白が入って化ける。結果を読んで判断する箇所は、環境変数 <code>WSL_UTF8=1</code> を付けて UTF-8 で出させてから読む。<code>chcp</code> は使わない</li>
+<li>検証で Git Bash から呼ぶと、<code>/i</code> のような <code>/</code> で始まる引数がパスに書き換えられる（<code>/i</code> → <code>I:/</code>）。<code>msiexec</code> などは PowerShell・cmd から呼ぶ。Bash から呼ぶときは <code>MSYS_NO_PATHCONV=1</code> を付ける</li>
 <li>処理の記録を、日本語のログに残す</li>
 </ul>
 </section>
