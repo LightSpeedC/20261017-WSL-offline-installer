@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WSL オフラインインストーラ</title>
+<style>
+:root{--navy1:#12224d;--navy2:#2f5fbf;--ink:#1c2330;--ink-soft:#4a5568;--line:#d9dfe8;--code-bg:#f4f6fa;--link:#1a4fa0;--accent:var(--navy1);--accent2:var(--navy2);--soft:#f2f5fb;}
+.ch01{--accent:hsl(280,78%,25%);--accent2:hsl(280,58%,55%);--soft:hsl(280,28%,95%);}
+.ch02{--accent:hsl(140,78%,25%);--accent2:hsl(140,58%,55%);--soft:hsl(140,28%,95%);}
+.ch03{--accent:hsl(0,78%,25%);--accent2:hsl(0,58%,55%);--soft:hsl(0,28%,95%);}
+body{margin:0;font-family:"Segoe UI","Yu Gothic UI",Meiryo,sans-serif;font-size:15.5px;line-height:1.85;color:var(--ink);background:#fff;}
+a{color:var(--link,#1a4fa0);background:transparent;}
+.titlebar{background:linear-gradient(135deg,var(--navy1,#12224d),var(--navy2,#2f5fbf));color:#fff;padding:34px 30px 30px;}
+.titlebar .inner{max-width:1600px;margin:0 auto;}
+.titlebar h1{font-size:1.9em;margin:0 0 6px;color:#fff;}
+.titlebar .lead,.titlebar .date{color:#e6ecf8;background:transparent;margin:2px 0;font-size:.95em;}
+.wrap{max-width:1600px;margin:0 auto;padding:0 30px;}
+a.back-home{display:inline-block;padding:2px 10px;border-radius:6px;color:#fff;background:linear-gradient(100deg,var(--navy1,#12224d),var(--navy2,#2f5fbf));text-decoration:none;font-weight:700;}
+.wrap > .back-home{margin-top:18px;}
+.toc ol{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;counter-reset:tocnum;}
+.toc li{counter-increment:tocnum;}
+.toc ol a{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;white-space:normal;width:310px;max-width:100%;padding:6px 12px;border-radius:6px;font-weight:700;text-decoration:none;color:#fff;background:linear-gradient(100deg,var(--accent,#12224d),var(--accent2,#2f5fbf));}
+.toc ol a::before{content:counter(tocnum) ". ";}
+section{margin:34px 0;padding:4px 26px 26px;border-radius:8px;background:linear-gradient(180deg,var(--soft,#f2f5fb),#fff);color:var(--ink);}
+section h1{margin:26px 0 20px;padding:14px 20px;font-size:1.45em;color:#fff;border-radius:8px;background:linear-gradient(100deg,var(--accent,#12224d),var(--accent2,#2f5fbf));box-shadow:0 3px 10px rgba(0,0,0,.18);}
+code{background:var(--code-bg,#f4f6fa);border:1px solid var(--line,#d9dfe8);color:#17335f;padding:0 4px;border-radius:4px;font-size:.92em;}
+pre{background:var(--code-bg,#f4f6fa);color:var(--ink);border-left:5px solid var(--navy2,#2f5fbf);padding:13px 16px;overflow-x:auto;}
+pre code{border:none;background:transparent;padding:0;}
+footer{max-width:1600px;margin:0 auto;padding:18px 30px 30px;color:var(--ink-soft);background:#fff;}
+</style>
+</head>
+<body>
+<div class="titlebar"><div class="inner">
+<h1>WSL オフラインインストーラ</h1>
+<p class="lead">ネットにつながらない Windows 11 PC へ、WSL2 と準備済みの Ubuntu を導入する</p>
+<p class="date">📅 作成: 2026-10-17 / 更新: 2026-10-17</p>
+</div></div>
+<div class="wrap">
+<a class="back-home" href="../" title="親サイトへ">⌂</a>
+
+<p>ネットにつながる PC で、最新の WSL・Windows 用 GPU ドライバ・準備済みの Ubuntu 24.04 を集めて配布物にします。ネットにつながらない PC では、インストーラを実行するだけで導入できます。Ubuntu には開発ツール、nvm と Node.js、主な AI エージェント、llama-server（CPU・NVIDIA・Intel 向け）を入れておき、AI エージェントはオンプレの llama-server につないで使います。</p>
+
+<pre><code class="language-text">build/       ビルド側（ネットにつながる PC）のスクリプト
+bundle/      集めたもの（Git には入れない）
+installer/   導入側（ネットにつながらない PC）のスクリプト
+notes/       計画・状態・ルール</code></pre>
+
+<nav class="toc"><ol>
+<li class="ch01"><a href="#ch01">計画</a></li>
+<li class="ch02"><a href="#ch02">状態</a></li>
+<li class="ch03"><a href="#ch03">ルール</a></li>
+</ol></nav>
+
+<section class="ch01" id="ch01">
+<h1>計画</h1>
+<ul><li><a href="notes/10_plan/p261017-01-WSLオフラインインストーラ.html">WSL オフラインインストーラ 計画</a></li></ul>
+</section>
+
+<section class="ch02" id="ch02">
+<h1>状態</h1>
+<ul><li><a href="notes/30_status/status.html">WSL オフラインインストーラ 状態</a></li></ul>
+</section>
+
+<section class="ch03" id="ch03">
+<h1>ルール</h1>
+<ul><li><a href="notes/90_rules/local-rules.html">WSL オフラインインストーラ ローカルルール</a></li></ul>
+</section>
+
+</div>
+<footer><a class="back-home" href="../" title="親サイトへ">⌂</a></footer>
+</body>
+</html>
