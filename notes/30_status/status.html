@@ -66,7 +66,7 @@ a.back-home{display:inline-block;padding:2px 10px;border-radius:6px;color:#fff;b
 <thead><tr><th>順</th><th>作業</th><th>状態</th></tr></thead>
 <tbody>
 <tr><td class="nowrap">1</td><td>初期化（git・.gitignore・文字コード定義）</td><td><span class="badge b-ok">済</span></td></tr>
-<tr><td class="nowrap">2</td><td><code>build/fetch-wsl.ps1</code>（最新の WSL msi を取得）。2026-10-17 の実行で 3.0.3 を取得、SHA-256 は GitHub の digest と一致、署名は Microsoft で有効</td><td><span class="badge b-ok">済</span></td></tr>
+<tr><td class="nowrap">2</td><td><code>build/fetch-wsl.ps1</code>（最新の WSL msi を取得）。2026-10-17 の実行で 3.0.3 を取得、SHA-256 は GitHub の digest と一致、署名は Microsoft で有効。この msi でビルド用の PC を 2.7.5 → 3.0.3 に更新でき、<code>wsl -v</code> で確認済み（カーネル 6.18.54.1-1）</td><td><span class="badge b-ok">済</span></td></tr>
 <tr><td class="nowrap">3</td><td><code>build/fetch-drivers.ps1</code>（NVIDIA・Intel の Windows 用ドライバ）</td><td><span class="badge b-none">未</span></td></tr>
 <tr><td class="nowrap">4</td><td><code>build/prepare-distro.ps1</code>（Ubuntu・apt・nvm・Node.js・AI エージェント）</td><td><span class="badge b-none">未</span></td></tr>
 <tr><td class="nowrap">5</td><td>llama-server の 3 通りのビルド（CPU・CUDA・SYCL）</td><td><span class="badge b-none">未</span></td></tr>
