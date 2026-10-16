@@ -1,0 +1,180 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WSL オフラインインストーラ 計画</title>
+<style>
+:root{--navy1:#12224d;--navy2:#2f5fbf;--ink:#1c2330;--ink-soft:#4a5568;--line:#d9dfe8;--code-bg:#f4f6fa;--link:#1a4fa0;--accent:var(--navy1);--accent2:var(--navy2);--soft:#f2f5fb;}
+.ch01{--accent:hsl(280,78%,25%);--accent2:hsl(280,58%,55%);--soft:hsl(280,28%,95%);}
+.ch02{--accent:hsl(210,78%,25%);--accent2:hsl(210,58%,55%);--soft:hsl(210,28%,95%);}
+.ch03{--accent:hsl(140,78%,25%);--accent2:hsl(140,58%,55%);--soft:hsl(140,28%,95%);}
+.ch04{--accent:hsl(70,78%,25%);--accent2:hsl(70,58%,55%);--soft:hsl(70,28%,95%);}
+.ch05{--accent:hsl(0,78%,25%);--accent2:hsl(0,58%,55%);--soft:hsl(0,28%,95%);}
+body{margin:0;font-family:"Segoe UI","Yu Gothic UI",Meiryo,sans-serif;font-size:15.5px;line-height:1.85;color:var(--ink);background:#fff;}
+a{color:var(--link,#1a4fa0);background:transparent;}
+.titlebar{background:linear-gradient(135deg,var(--navy1,#12224d),var(--navy2,#2f5fbf));color:#fff;padding:34px 30px 30px;}
+.titlebar .inner{max-width:1600px;margin:0 auto;}
+.titlebar h1{font-size:1.9em;margin:0 0 6px;color:#fff;}
+.titlebar .lead,.titlebar .date{color:#e6ecf8;background:transparent;margin:2px 0;font-size:.95em;}
+.wrap{max-width:1600px;margin:0 auto;padding:0 30px;}
+.toc ol{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;counter-reset:tocnum;}
+.toc li{counter-increment:tocnum;}
+.toc ol a{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;white-space:normal;width:310px;max-width:100%;padding:6px 12px;border-radius:6px;font-weight:700;text-decoration:none;color:#fff;background:linear-gradient(100deg,var(--accent,#12224d),var(--accent2,#2f5fbf));}
+.toc ol a::before{content:counter(tocnum) ". ";}
+section{margin:34px 0;padding:4px 26px 26px;border-radius:8px;background:linear-gradient(180deg,var(--soft,#f2f5fb),#fff);color:var(--ink);}
+section h1{margin:26px 0 20px;padding:14px 20px;font-size:1.45em;color:#fff;border-radius:8px;background:linear-gradient(100deg,var(--accent,#12224d),var(--accent2,#2f5fbf));box-shadow:0 3px 10px rgba(0,0,0,.18);}
+section h2{margin:30px 0 12px;padding:6px 12px;font-size:1.2em;border-left:6px solid var(--accent,#12224d);background:linear-gradient(90deg,var(--soft,#f2f5fb),#fff);color:var(--accent,#12224d);}
+code{background:var(--code-bg,#f4f6fa);border:1px solid var(--line,#d9dfe8);color:#17335f;padding:0 4px;border-radius:4px;font-size:.92em;}
+pre{background:linear-gradient(180deg,var(--soft,#f2f5fb),#fff);color:var(--ink);border-left:5px solid var(--accent2,#2f5fbf);padding:13px 16px;overflow-x:auto;}
+pre code{border:none;background:transparent;padding:0;}
+.tablewrap{overflow-x:auto;}
+table{border-collapse:collapse;border-radius:8px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,.08);margin:8px 0;}
+th{background:linear-gradient(100deg,var(--accent,#12224d),var(--accent2,#2f5fbf));color:#fff;padding:9px 12px;text-align:left;}
+td{padding:9px 12px;border-bottom:1px solid var(--line,#d9dfe8);vertical-align:top;background:#fff;color:var(--ink);}
+tr:nth-child(even) td{background:#fafbfe;}
+.nowrap{white-space:nowrap;}
+.callout{border-left:6px solid var(--accent,#12224d);background:linear-gradient(180deg,var(--soft,#f2f5fb),#fff);color:var(--ink);border-radius:0 8px 8px 0;padding:10px 16px;margin:12px 0;}
+.callout strong{color:var(--accent,#12224d);background:transparent;}
+footer{max-width:1600px;margin:0 auto;padding:18px 30px 30px;color:var(--ink-soft);background:#fff;}
+</style>
+</head>
+<body>
+<div class="titlebar"><div class="inner">
+<h1>WSL オフラインインストーラ 計画</h1>
+<p class="lead">ネットにつながらない Windows 11 PC へ、最新の WSL2 と準備済みの Ubuntu 24.04 を導入する</p>
+<p class="date">📅 作成: 2026-10-17 / 更新: 2026-10-17</p>
+</div></div>
+<div class="wrap">
+
+<nav class="toc"><ol>
+<li class="ch01"><a href="#ch01">決定事項</a></li>
+<li class="ch02"><a href="#ch02">フォルダ構成</a></li>
+<li class="ch03"><a href="#ch03">ビルド側（build/）</a></li>
+<li class="ch04"><a href="#ch04">導入側（installer/）</a></li>
+<li class="ch05"><a href="#ch05">検証と実装順</a></li>
+</ol></nav>
+
+<section class="ch01" id="ch01">
+<h1>決定事項</h1>
+<div class="tablewrap"><table>
+<thead><tr><th>項目</th><th>決定</th></tr></thead>
+<tbody>
+<tr><td class="nowrap">WSL 本体</td><td>ビルドするたびに<strong>その時点の最新版</strong>を取ってくる（版数は固定しない）</td></tr>
+<tr><td class="nowrap">ディストリビューション</td><td>Ubuntu 24.04 だけ</td></tr>
+<tr><td class="nowrap">導入側の OS</td><td>Windows 11 だけ</td></tr>
+<tr><td class="nowrap">導入側の GPU</td><td>ビルド用の PC と同じ世代（Intel Iris Xe ＋ NVIDIA RTX 30 系のノート PC 用）を想定</td></tr>
+<tr><td class="nowrap">llama-server</td><td>CPU・NVIDIA（CUDA）・Intel（SYCL）の 3 通りを、最新の llama.cpp からビルドして Ubuntu の中に入れる</td></tr>
+<tr><td class="nowrap">AI エージェント</td><td>オンプレのオフライン llama-server につないで使う</td></tr>
+<tr><td class="nowrap">Linux の中身</td><td>ビルド側で apt のパッケージを入れておき、<code>wsl --export</code> で書き出したものを配る</td></tr>
+<tr><td class="nowrap">フォルダ構成</td><td>共通ルールのフォルダ構成は使わない。<code>build/</code>・<code>bundle/</code>・<code>installer/</code> を使い、計画は <code>notes/</code> に置く</td></tr>
+</tbody></table></div>
+</section>
+
+<section class="ch02" id="ch02">
+<h1>フォルダ構成</h1>
+<pre><code class="language-text">build/       ビルド側のスクリプト（取得・準備・書き出し・まとめ）
+bundle/      集めたもの（Git には入れない）
+  wsl/         WSL の msi（x64）
+  distro/      準備済みの Ubuntu（.tar.gz）
+  manifest.json  版数・SHA-256・取得日時
+installer/   導入側のスクリプト（install.cmd ＋ install.ps1）
+notes/       計画・状態
+_releases/   installer と bundle をまとめた zip（Git には入れない）</code></pre>
+</section>
+
+<section class="ch03" id="ch03">
+<h1>ビルド側（build/）</h1>
+<h2>1. fetch-wsl.ps1 ― 最新の WSL を取得</h2>
+<ul>
+<li>GitHub API の <code>repos/microsoft/WSL/releases/latest</code> から、<code>*.x64.msi</code> の資産を探して取得する（プレリリースは除く）</li>
+<li>版数・ダウンロード元・SHA-256 を <code>manifest.json</code> に書く。同じ版がすでにあれば取り直さない</li>
+</ul>
+<h2>2. prepare-distro.ps1 ― Ubuntu を準備して書き出す</h2>
+<ul>
+<li>ビルド用の名前（<code>wsl-offline-build</code>）で、Ubuntu 24.04 を一時的に入れる</li>
+<li>入れるパッケージの一覧は <code>build/packages.txt</code> に置き、<code>apt update</code> → <code>apt full-upgrade</code> → 一覧を <code>apt install</code> の順に実行する（初期値: <code>build-essential</code> <code>git</code> <code>curl</code>）</li>
+<li>既定のユーザで、ホームに nvm を入れ、nvm で Node.js を入れる。Node.js の版は <code>build/node-version.txt</code> の 1 か所に置く（初期値: 26.11。実在する版かは実装するときに確かめる）</li>
+<li>AI エージェントは <code>build/npm-global.txt</code> の一覧を <code>npm install -g</code> で入れる。どれもホーム配下に入るので、書き出しに含まれ、導入先ではネット無しで起動できる。初期値: <code>@anthropic-ai/claude-code</code> <code>@openai/codex</code> <code>@mariozechner/pi-coding-agent</code> <code>opencode-ai</code> <code>openclaw</code> <code>@google/gemini-cli</code> <code>@github/copilot</code> <code>@qwen-code/qwen-code</code> <code>@moonshot-ai/kimi-code</code></li>
+<li>npm で配られていないもの（Antigravity CLI <code>agy</code>）は、提供元の導入スクリプトで既定のユーザのホーム（<code>~/.local/bin</code>）に入れる</li>
+<li>ユーザ名とパスワードは、ビルド用の Ubuntu を初めて起動したときに表示される入力欄で、利用者が入力する。スクリプトは名前を持たず、<code>etc/_default_user.txt</code> も使わない。<strong>パスワードは引数・ファイル・ログ・環境変数のどこにも残さない</strong></li>
+<li>その既定ユーザの設定は書き出しに含まれない見込みのため（未検証）、<code>/etc/wsl.conf</code> の <code>[user]</code> に <code>default=&lt;名前&gt;</code> を書く。名前は Ubuntu の中で UID 1000 のユーザから取り、画面にもログにも出さない</li>
+<li><code>apt clean</code> で掃除したあと <code>wsl --export</code> で書き出し、ビルド用のディストリビューションは <code>--unregister</code> で消す</li>
+</ul>
+<h2>2-1. llama-server を 3 通りビルドして入れる</h2>
+<ul>
+<li>llama.cpp は、ビルドするたびに最新のリリースを使う。使った版は <code>manifest.json</code> に残す</li>
+<li>ビルド用の Ubuntu の中で 3 通りにビルドし、<code>/opt/llama.cpp/cpu</code>・<code>/opt/llama.cpp/cuda</code>（NVIDIA、CUDA）・<code>/opt/llama.cpp/intel</code>（Intel、SYCL ＋ oneAPI）に置く</li>
+<li>CUDA Toolkit と oneAPI の開発用一式は、ビルドが済んだら外し、実行に要るライブラリだけを残す</li>
+<li>GPU のドライバは WSL の中には入れず、Windows 側のものを使う</li>
+</ul>
+<h2>2-2. Windows 用の GPU ドライバを持って行く</h2>
+<ul>
+<li><code>build/fetch-drivers.ps1</code> で、NVIDIA（GeForce、ノート PC 用も含む）と Intel（Arc・Iris Xe）の Windows 用の最新ドライバを <code>bundle/drivers/</code> に取得する。版と SHA-256 は <code>manifest.json</code> に書く</li>
+<li>最新版を自動で探せない場合は、提供元のページから手で取得して <code>bundle/drivers/</code> に置く手順にする（実装するときに確かめる）</li>
+<li>このビルド用の PC（Iris Xe ＋ RTX 3050 Ti Laptop）にも、同じドライバを先に入れ、llama-server の 3 通りの動作をここで確かめる</li>
+</ul>
+<h2>2-3. オンプレの llama-server へつなぐ設定</h2>
+<ul>
+<li>導入先では、オフラインで動く llama-server（OpenAI 互換の API）だけにつなぐ。接続先の URL とモデル名は、導入するときに <code>install.ps1</code> の引数で受け取り、各エージェントの設定ファイルへ書く。URL をビルド時の値として配布物に埋め込まない</li>
+<li>エージェントごとに、llama-server へつなげるか、どこに何を書けばよいかを、実装の前に 1 つずつ実際に試して確かめる（下の表は見込みで、未検証）</li>
+<li>更新の確認・テレメトリ・ログインの促しは、オフラインでは失敗するか待たされるため、設定で止められるものは止める</li>
+</ul>
+<div class="tablewrap"><table>
+<thead><tr><th>エージェント</th><th>見込み（未検証）</th></tr></thead>
+<tbody>
+<tr><td class="nowrap">OpenCode ／ Pi ／ OpenClaw ／ Qwen Code ／ Codex CLI</td><td>OpenAI 互換の接続先を設定できる見込み</td></tr>
+<tr><td class="nowrap">Claude Code</td><td>Anthropic 形式の API が要る。llama-server がこの形式を受け付けるか、間に変換を挟むかを確かめる</td></tr>
+<tr><td class="nowrap">Kimi Code</td><td>接続先を変えられるかを確かめる</td></tr>
+<tr><td class="nowrap">Gemini CLI ／ Copilot CLI ／ Antigravity CLI</td><td>提供元のサービスへのログインが前提で、llama-server へはつなげない見込み。つなげなければ、入れるかどうかを改めて決める</td></tr>
+</tbody></table></div>
+<h2>3. package.ps1 ― 配布物にまとめる</h2>
+<ul>
+<li><code>installer/</code> と <code>bundle/</code> を 1 つの zip にして <code>_releases/</code> に出す。zip の名前には WSL の版数と日付を入れる</li>
+</ul>
+<div class="callout"><strong>注意:</strong> zip が 2 GB を超えると、扱えないツールがあります。大きくなった場合は、<code>.tar.gz</code> を zip に含めずに別ファイルで配るかどうかを、そのとき決めます。</div>
+</section>
+
+<section class="ch04" id="ch04">
+<h1>導入側（installer/）</h1>
+<p><code>install.cmd</code> をダブルクリックすると、<code>install.ps1</code>（Windows PowerShell 5.1）が次の順に進みます。ネットにはつなぎません。</p>
+<ol>
+<li>管理者に昇格する</li>
+<li>Windows 11 かどうか、仮想化がファームウェアで有効かを確認する。足りなければ理由を示して止める</li>
+<li><code>manifest.json</code> の SHA-256 と、手元のファイルが一致するかを確かめる</li>
+<li>Windows の機能 <code>VirtualMachinePlatform</code> を有効にする。再起動が必要なら、再起動したあとに続きから進むよう登録して再起動を促す</li>
+<li>WSL の msi を <code>msiexec /i … /qn</code> で入れる。入っている版が同じか新しければ飛ばす</li>
+<li><code>wsl --set-default-version 2</code> を実行する</li>
+<li>NVIDIA・Intel の GPU が載っていれば、入っているドライバの版を調べ、持って来たものより古ければ、そのドライバを無人で入れる（GPU が無ければ飛ばす）</li>
+<li><code>wsl --import &lt;名前&gt; &lt;置き場&gt; &lt;tar.gz&gt;</code> で Ubuntu を入れる。同じ名前がすでにあれば飛ばす（入れ直すときは引数で指定する）</li>
+<li>引数で受け取った llama-server の URL とモデル名を、各エージェントの設定ファイルへ書く。llama-server へつながるかを確かめる（つながらなくても導入は止めず、警告にする）</li>
+<li><code>wsl -l -v</code> と、ディストリビューションの中で簡単なコマンドを実行し、動くことを確かめる</li>
+</ol>
+<ul>
+<li>導入先のフォルダと名前は引数で変えられるようにする（既定値は <code>%LOCALAPPDATA%\wsl\Ubuntu-24.04-offline</code> と <code>Ubuntu-24.04</code>）</li>
+<li>何度実行しても同じ結果になるようにする</li>
+<li>処理の記録を、日本語のログに残す</li>
+</ul>
+</section>
+
+<section class="ch05" id="ch05">
+<h1>検証と実装順</h1>
+<h2>実装する順（1 つずつ確認しながら進める）</h2>
+<ol>
+<li>初期化（<code>git init -b develop</code>、<code>.gitignore</code>、文字コードと改行の定義ファイル）</li>
+<li><code>fetch-wsl.ps1</code></li>
+<li><code>prepare-distro.ps1</code> と <code>packages.txt</code></li>
+<li><code>install.ps1</code> と <code>install.cmd</code></li>
+<li><code>package.ps1</code></li>
+</ol>
+<h2>検証</h2>
+<ul>
+<li>ネットを切った Windows 11 の VM（Hyper-V、入れ子の仮想化を有効にしたもの）で試す</li>
+<li>試す場面は 3 つ: WSL が入っていない状態から ／ 古い WSL が入っている状態から ／ 一度入れたあとの 2 回目の実行</li>
+</ul>
+</section>
+
+</div>
+<footer>WSL オフラインインストーラ</footer>
+</body>
+</html>
