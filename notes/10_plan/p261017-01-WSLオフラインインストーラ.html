@@ -95,7 +95,7 @@ _releases/   installer と bundle をまとめた zip（Git には入れない�
 </ul>
 <h2>2. prepare-distro.ps1 ― Ubuntu を準備して書き出す</h2>
 <ul>
-<li>ビルド用の名前（<code>wsl-offline-build</code>）で、Ubuntu 24.04 を一時的に入れる</li>
+<li>ビルド用の名前（<code>wsl-offline-prepare</code>）で、Ubuntu 24.04 を一時的に入れる</li>
 <li>入れるパッケージの一覧は <code>prepare/packages.txt</code> に置き、<code>apt update</code> → <code>apt full-upgrade</code> → 一覧を <code>apt install</code> の順に実行する（初期値: <code>build-essential</code> <code>git</code> <code>curl</code>）</li>
 <li>既定のユーザで、ホームに nvm を入れ、nvm で Node.js を入れる。Node.js の版は <code>prepare/node-version.txt</code> の 1 か所に置く（初期値: 26.11。実在する版かは実装するときに確かめる）</li>
 <li>AI エージェントは <code>prepare/npm-global.txt</code> の一覧を <code>npm install -g</code> で入れる。どれもホーム配下に入るので、書き出しに含まれ、導入先ではネット無しで起動できる。初期値: <code>@anthropic-ai/claude-code</code> <code>@openai/codex</code> <code>@mariozechner/pi-coding-agent</code> <code>opencode-ai</code> <code>openclaw</code> <code>@google/gemini-cli</code> <code>@github/copilot</code> <code>@qwen-code/qwen-code</code> <code>@moonshot-ai/kimi-code</code></li>

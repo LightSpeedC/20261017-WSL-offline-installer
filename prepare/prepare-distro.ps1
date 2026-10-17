@@ -4,7 +4,7 @@
 param([switch]$Recreate)
 $ErrorActionPreference = 'Stop'
 
-$distroName = 'wsl-offline-build'
+$distroName = 'wsl-offline-prepare'
 $sourceDistro = 'Ubuntu-24.04'
 # wsl.exe の出力を UTF-16 ではなく UTF-8 で受け取る
 $env:WSL_UTF8 = '1'
