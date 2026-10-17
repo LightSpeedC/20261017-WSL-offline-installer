@@ -3,8 +3,6 @@ etc/
 logs/
 _*
 
-bundle/
-
 .claude/*
 !.claude/settings.json
 !.claude/commands/

@@ -1,5 +1,5 @@
-﻿# NVIDIA と Intel の Windows 用 GPU ドライバを bundle/drivers/ へ取得する
-# 版数・取得元・SHA-256 を bundle/manifest.json の drivers に書く（計画: p261017-01）
+﻿# NVIDIA と Intel の Windows 用 GPU ドライバを _bundle/drivers/ へ取得する
+# 版数・取得元・SHA-256 を _bundle/manifest.json の drivers に書く（計画: p261017-01）
 # NVIDIA: ドライバ検索ページが使う API で最新版を探す（公開仕様ではない）
 # Intel: サイトがブラウザ以外を 403 で拒むため、URL は prepare/intel-driver-url.txt に置く。
 #        ダウンロード元（downloadmirror.intel.com）は直接取得できる
@@ -8,7 +8,7 @@ $ProgressPreference = 'SilentlyContinue'
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
 $projectRoot = Split-Path -Parent $PSScriptRoot
-$bundleDir = Join-Path $projectRoot 'bundle'
+$bundleDir = Join-Path $projectRoot '_bundle'
 $driversDir = Join-Path $bundleDir 'drivers'
 $manifestPath = Join-Path $bundleDir 'manifest.json'
 $intelUrlPath = Join-Path $PSScriptRoot 'intel-driver-url.txt'
@@ -86,4 +86,4 @@ if (Test-Path -LiteralPath $manifestPath) {
 $manifest['drivers'] = [ordered]@{ nvidia = $nvidia; intel = $intel }
 [IO.File]::WriteAllText($manifestPath, ($manifest | ConvertTo-Json -Depth 10), (New-Object Text.UTF8Encoding $false))
 
-Write-Host "完了: NVIDIA $($nvidia.version) と Intel $($intel.version) を bundle/drivers/ に用意しました"
+Write-Host "完了: NVIDIA $($nvidia.version) と Intel $($intel.version) を _bundle/drivers/ に用意しました"

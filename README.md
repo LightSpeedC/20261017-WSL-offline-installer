@@ -10,7 +10,7 @@
 
 ```text
 prepare/     ビルド側（ネットにつながる PC）のスクリプト
-bundle/      集めたもの（Git には入れない）
+_bundle/     集めたもの（Git には入れない）
 installer/   導入側（ネットにつながらない PC）のスクリプト
 notes/       計画・状態・ルール
 ```

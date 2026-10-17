@@ -70,20 +70,20 @@ a.back-home{display:inline-block;padding:2px 10px;border-radius:6px;color:#fff;b
 <tr><td class="nowrap">llama-server</td><td>CPU・NVIDIA（CUDA）・Intel（SYCL）の 3 通りを、最新の llama.cpp からビルドして Ubuntu の中に入れる</td></tr>
 <tr><td class="nowrap">AI エージェント</td><td>オンプレのオフライン llama-server につないで使う</td></tr>
 <tr><td class="nowrap">Linux の中身</td><td>ビルド側で apt のパッケージを入れておき、<code>wsl --export</code> で書き出したものを配る</td></tr>
-<tr><td class="nowrap">フォルダ構成</td><td>共通ルールのフォルダ構成は使わない。<code>prepare/</code>・<code>bundle/</code>・<code>installer/</code> を使い、計画は <code>notes/</code> に置く</td></tr>
+<tr><td class="nowrap">フォルダ構成</td><td>共通ルールのフォルダ構成は使わない。<code>prepare/</code>・<code>_bundle/</code>・<code>installer/</code> を使い、計画は <code>notes/</code> に置く</td></tr>
 </tbody></table></div>
 </section>
 
 <section class="ch02" id="ch02">
 <h1>フォルダ構成</h1>
 <pre><code class="language-text">prepare/     ビルド側のスクリプト（取得・準備・書き出し・まとめ）
-bundle/      集めたもの（Git には入れない）
+_bundle/     集めたもの（Git には入れない）
   wsl/         WSL の msi（x64）
   distro/      準備済みの Ubuntu（.tar.gz）
   manifest.json  版数・SHA-256・取得日時
 installer/   導入側のスクリプト（install.cmd ＋ install.ps1）
 notes/       計画・状態
-_releases/   installer と bundle をまとめた zip（Git には入れない）</code></pre>
+_releases/   installer と _bundle をまとめた zip（Git には入れない）</code></pre>
 </section>
 
 <section class="ch03" id="ch03">
@@ -113,8 +113,8 @@ _releases/   installer と bundle をまとめた zip（Git には入れない�
 </ul>
 <h2>2-2. Windows 用の GPU ドライバを持って行く</h2>
 <ul>
-<li><code>prepare/fetch-drivers.ps1</code> で、NVIDIA（GeForce、ノート PC 用も含む）と Intel（Arc・Iris Xe）の Windows 用の最新ドライバを <code>bundle/drivers/</code> に取得する。版と SHA-256 は <code>manifest.json</code> に書く</li>
-<li>最新版を自動で探せない場合は、提供元のページから手で取得して <code>bundle/drivers/</code> に置く手順にする（実装するときに確かめる）</li>
+<li><code>prepare/fetch-drivers.ps1</code> で、NVIDIA（GeForce、ノート PC 用も含む）と Intel（Arc・Iris Xe）の Windows 用の最新ドライバを <code>_bundle/drivers/</code> に取得する。版と SHA-256 は <code>manifest.json</code> に書く</li>
+<li>最新版を自動で探せない場合は、提供元のページから手で取得して <code>_bundle/drivers/</code> に置く手順にする（実装するときに確かめる）</li>
 <li>このビルド用の PC（Iris Xe ＋ RTX 3050 Ti Laptop）にも、同じドライバを先に入れ、llama-server の 3 通りの動作をここで確かめる</li>
 </ul>
 <h2>2-3. オンプレの llama-server へつなぐ設定</h2>
@@ -133,7 +133,7 @@ _releases/   installer と bundle をまとめた zip（Git には入れない�
 </tbody></table></div>
 <h2>3. package.ps1 ― 配布物にまとめる</h2>
 <ul>
-<li><code>installer/</code> と <code>bundle/</code> を 1 つの zip にして <code>_releases/</code> に出す。zip の名前には WSL の版数と日付を入れる</li>
+<li><code>installer/</code> と <code>_bundle/</code> を 1 つの zip にして <code>_releases/</code> に出す。zip の名前には WSL の版数と日付を入れる</li>
 </ul>
 <div class="callout"><strong>注意:</strong> zip が 2 GB を超えると、扱えないツールがあります。大きくなった場合は、<code>.tar.gz</code> を zip に含めずに別ファイルで配るかどうかを、そのとき決めます。</div>
 </section>

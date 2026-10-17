@@ -1,11 +1,11 @@
-﻿# 最新の WSL（x64 の msi）を GitHub の microsoft/WSL から bundle/wsl/ へ取得する
-# 版数・取得元・SHA-256 を bundle/manifest.json の wsl に書く（計画: p261017-01）
+﻿# 最新の WSL（x64 の msi）を GitHub の microsoft/WSL から _bundle/wsl/ へ取得する
+# 版数・取得元・SHA-256 を _bundle/manifest.json の wsl に書く（計画: p261017-01）
 $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'SilentlyContinue'
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
 $projectRoot = Split-Path -Parent $PSScriptRoot
-$bundleDir = Join-Path $projectRoot 'bundle'
+$bundleDir = Join-Path $projectRoot '_bundle'
 $wslDir = Join-Path $bundleDir 'wsl'
 $manifestPath = Join-Path $bundleDir 'manifest.json'
 
@@ -60,7 +60,7 @@ if ($null -eq $expectedHash) {
 	Write-Host '注意: GitHub が digest を返さなかったため、突き合わせは省きました'
 }
 
-# 古い版の msi は配布物に入れないので消す（bundle/ は取得物の置き場）
+# 古い版の msi は配布物に入れないので消す（_bundle/ は取得物の置き場）
 Get-ChildItem -LiteralPath $wslDir -Filter '*.msi' | Where-Object { $_.Name -ne $asset.name } | ForEach-Object {
 	Write-Host "古い版を消します: $(Get-RelativePath $_.FullName)"
 	Remove-Item -LiteralPath $_.FullName
