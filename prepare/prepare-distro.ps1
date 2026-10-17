@@ -3,9 +3,12 @@
 # -Recreate: ビルド用の Ubuntu を消して作り直す
 param([switch]$Recreate)
 $ErrorActionPreference = 'Stop'
+# カレントが subst のドライブだと、WSL が Linux 側のパスに直せず警告を出すため、ホームに移る
+Set-Location -LiteralPath $env:USERPROFILE
 
-$distroName = 'wsl-offline-prepare'
 $sourceDistro = 'Ubuntu-24.04'
+# 標準の名前（Ubuntu-24.04）とぶつからないよう、用途を後ろに付ける
+$distroName = "$sourceDistro-prepare"
 # wsl.exe の出力を UTF-16 ではなく UTF-8 で受け取る
 $env:WSL_UTF8 = '1'
 
@@ -38,9 +41,15 @@ if ($Recreate -and (Test-DistroExists)) {
 }
 
 if (-not (Test-DistroExists)) {
+	# イメージは _bundle/source/ に一度だけ取得し、作り直すときは取得済みのものを使う
+	& (Join-Path $PSScriptRoot 'fetch-ubuntu.ps1') -DistroName $sourceDistro
+	$manifest = [IO.File]::ReadAllText((Join-Path (Split-Path -Parent $PSScriptRoot) '_bundle/manifest.json')) | ConvertFrom-Json
+	$imagePath = Join-Path (Split-Path -Parent $PSScriptRoot) $manifest.ubuntu_source.file
+
 	Write-Host "$sourceDistro を $distroName という名前で入れます"
 	Write-Host 'Ubuntu が起動したら、ユーザ名とパスワードを入力してください。入力が済んだら exit で抜けてください'
-	wsl --install -d $sourceDistro --name $distroName | Out-Host
+	# 入力欄がキーを受け取れるよう、パイプに流さずに呼ぶ
+	& wsl --install --from-file $imagePath --name $distroName
 	if (-not (Test-DistroExists)) { throw "$distroName を入れられませんでした" }
 }
 
