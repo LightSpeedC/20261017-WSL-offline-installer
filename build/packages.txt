@@ -1,0 +1,4 @@
+# apt で入れるパッケージ（1 行に 1 つ。# 以降は読まない）
+build-essential
+git
+curl

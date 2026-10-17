@@ -1,0 +1,10 @@
+# npm install -g で入れる AI エージェント（1 行に 1 つ。# 以降は読まない）
+@anthropic-ai/claude-code
+@openai/codex
+@mariozechner/pi-coding-agent
+opencode-ai
+openclaw
+@google/gemini-cli
+@github/copilot
+@qwen-code/qwen-code
+@moonshot-ai/kimi-code
