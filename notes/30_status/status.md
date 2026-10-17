@@ -24,7 +24,7 @@
 |---|---|---|
 | 1 | 初期化（git・.gitignore・文字コード定義） | ✅ **済** |
 | 2 | `build/fetch-wsl.ps1`（最新の WSL msi を取得）。2026-10-17 の実行で 3.0.3 を取得、SHA-256 は GitHub の digest と一致、署名は Microsoft で有効。この msi でビルド用の PC を 2.7.5 → 3.0.3 に更新でき、`wsl -v` で確認済み（カーネル 6.18.54.1-1） | ✅ **済** |
-| 3 | `build/fetch-drivers.ps1`（NVIDIA・Intel の Windows 用ドライバ）。2026-10-17 の実行で NVIDIA 617.42・Intel 32.0.101.7092 を取得し、署名を確認。Intel のサイトはブラウザ以外を 403 で拒むため、Intel の URL は Chrome で調べて `build/intel-driver-url.txt` に置く。Iris Xe は「11th – 14th Gen Processor Graphics」の系統（Arc 用の 101.9xxx は Iris Xe を含まない） | ✅ **済** |
+| 3 | `build/fetch-drivers.ps1`（NVIDIA・Intel の Windows 用ドライバ）。2026-10-17 の実行で NVIDIA 617.42・Intel 32.0.101.7092 を取得し、署名を確認。Intel のサイトはブラウザ以外を 403 で拒むため、Intel の URL は Chrome で調べて `build/intel-driver-url.txt` に置く。Iris Xe は「11th – 14th Gen Processor Graphics」の系統（Arc 用の 101.9xxx は Iris Xe を含まない）。ビルド用の PC に NVIDIA 617.42 を入れ、`nvidia-smi` で確認済み（CUDA 13.4） | ✅ **済** |
 | 4 | `build/prepare-distro.ps1`（Ubuntu・apt・nvm・Node.js・AI エージェント） | ⬜ **未** |
 | 5 | llama-server の 3 通りのビルド（CPU・CUDA・SYCL） | ⬜ **未** |
 | 6 | AI エージェントを llama-server へつなぐ設定 | ⬜ **未** |
