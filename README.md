@@ -9,7 +9,7 @@
 ネットにつながる PC で、最新の WSL・Windows 用 GPU ドライバ・準備済みの Ubuntu 24.04 を集めて配布物にします。ネットにつながらない PC では、インストーラを実行するだけで導入できます。Ubuntu には開発ツール、nvm と Node.js、主な AI エージェント、llama-server（CPU・NVIDIA・Intel 向け）を入れておき、AI エージェントはオンプレの llama-server につないで使います。
 
 ```text
-build/       ビルド側（ネットにつながる PC）のスクリプト
+prepare/     ビルド側（ネットにつながる PC）のスクリプト
 bundle/      集めたもの（Git には入れない）
 installer/   導入側（ネットにつながらない PC）のスクリプト
 notes/       計画・状態・ルール

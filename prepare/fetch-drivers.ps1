@@ -1,7 +1,7 @@
 ﻿# NVIDIA と Intel の Windows 用 GPU ドライバを bundle/drivers/ へ取得する
 # 版数・取得元・SHA-256 を bundle/manifest.json の drivers に書く（計画: p261017-01）
 # NVIDIA: ドライバ検索ページが使う API で最新版を探す（公開仕様ではない）
-# Intel: サイトがブラウザ以外を 403 で拒むため、URL は build/intel-driver-url.txt に置く。
+# Intel: サイトがブラウザ以外を 403 で拒むため、URL は prepare/intel-driver-url.txt に置く。
 #        ダウンロード元（downloadmirror.intel.com）は直接取得できる
 $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'SilentlyContinue'

@@ -57,7 +57,7 @@ a.back-home{display:inline-block;padding:2px 10px;border-radius:6px;color:#fff;b
 <h1>概要</h1>
 <p>計画: <a href="../10_plan/p261017-01-WSLオフラインインストーラ.html">WSL オフラインインストーラ 計画</a>（p261017-01）</p>
 <p>リポジトリ: <a href="https://github.com/LightSpeedC/20261017-WSL-offline-installer">LightSpeedC/20261017-WSL-offline-installer</a>（public、develop）</p>
-<p>初期化・README・ローカルルール・<code>build/fetch-wsl.ps1</code>・<code>build/fetch-drivers.ps1</code> まで済み。次は <code>build/prepare-distro.ps1</code>。</p>
+<p>初期化・README・ローカルルール・<code>prepare/fetch-wsl.ps1</code>・<code>prepare/fetch-drivers.ps1</code> まで済み。次は <code>prepare/prepare-distro.ps1</code>。</p>
 </section>
 
 <section class="ch02" id="ch02">
@@ -66,13 +66,13 @@ a.back-home{display:inline-block;padding:2px 10px;border-radius:6px;color:#fff;b
 <thead><tr><th>順</th><th>作業</th><th>状態</th></tr></thead>
 <tbody>
 <tr><td class="nowrap">1</td><td>初期化（git・.gitignore・文字コード定義）</td><td><span class="badge b-ok">済</span></td></tr>
-<tr><td class="nowrap">2</td><td><code>build/fetch-wsl.ps1</code>（最新の WSL msi を取得）。2026-10-17 の実行で 3.0.3 を取得、SHA-256 は GitHub の digest と一致、署名は Microsoft で有効。この msi でビルド用の PC を 2.7.5 → 3.0.3 に更新でき、<code>wsl -v</code> で確認済み（カーネル 6.18.54.1-1）</td><td><span class="badge b-ok">済</span></td></tr>
-<tr><td class="nowrap">3</td><td><code>build/fetch-drivers.ps1</code>（NVIDIA・Intel の Windows 用ドライバ）。2026-10-17 の実行で NVIDIA 617.42・Intel 32.0.101.7092 を取得し、署名を確認。Intel のサイトはブラウザ以外を 403 で拒むため、Intel の URL は Chrome で調べて <code>build/intel-driver-url.txt</code> に置く。Iris Xe は「11th – 14th Gen Processor Graphics」の系統（Arc 用の 101.9xxx は Iris Xe を含まない）。ビルド用の PC に NVIDIA 617.42 を入れ、<code>nvidia-smi</code> で確認済み（CUDA 13.4）</td><td><span class="badge b-ok">済</span></td></tr>
-<tr><td class="nowrap">4</td><td><code>build/prepare-distro.ps1</code>（Ubuntu・apt・nvm・Node.js・AI エージェント）。スクリプトは作成済み、初回は利用者が窓から対話で実行する</td><td><span class="badge b-warn">着手</span></td></tr>
+<tr><td class="nowrap">2</td><td><code>prepare/fetch-wsl.ps1</code>（最新の WSL msi を取得）。2026-10-17 の実行で 3.0.3 を取得、SHA-256 は GitHub の digest と一致、署名は Microsoft で有効。この msi でビルド用の PC を 2.7.5 → 3.0.3 に更新でき、<code>wsl -v</code> で確認済み（カーネル 6.18.54.1-1）</td><td><span class="badge b-ok">済</span></td></tr>
+<tr><td class="nowrap">3</td><td><code>prepare/fetch-drivers.ps1</code>（NVIDIA・Intel の Windows 用ドライバ）。2026-10-17 の実行で NVIDIA 617.42・Intel 32.0.101.7092 を取得し、署名を確認。Intel のサイトはブラウザ以外を 403 で拒むため、Intel の URL は Chrome で調べて <code>prepare/intel-driver-url.txt</code> に置く。Iris Xe は「11th – 14th Gen Processor Graphics」の系統（Arc 用の 101.9xxx は Iris Xe を含まない）。ビルド用の PC に NVIDIA 617.42 を入れ、<code>nvidia-smi</code> で確認済み（CUDA 13.4）</td><td><span class="badge b-ok">済</span></td></tr>
+<tr><td class="nowrap">4</td><td><code>prepare/prepare-distro.ps1</code>（Ubuntu・apt・nvm・Node.js・AI エージェント）。スクリプトは作成済み、初回は利用者が窓から対話で実行する</td><td><span class="badge b-warn">着手</span></td></tr>
 <tr><td class="nowrap">5</td><td>llama-server の 3 通りのビルド（CPU・CUDA・SYCL）</td><td><span class="badge b-none">未</span></td></tr>
 <tr><td class="nowrap">6</td><td>AI エージェントを llama-server へつなぐ設定</td><td><span class="badge b-none">未</span></td></tr>
 <tr><td class="nowrap">7</td><td><code>installer/install.ps1</code> ＋ <code>install.cmd</code></td><td><span class="badge b-none">未</span></td></tr>
-<tr><td class="nowrap">8</td><td><code>build/package.ps1</code>（配布用 zip）</td><td><span class="badge b-none">未</span></td></tr>
+<tr><td class="nowrap">8</td><td><code>prepare/package.ps1</code>（配布用 zip）</td><td><span class="badge b-none">未</span></td></tr>
 <tr><td class="nowrap">9</td><td>オフラインの Windows 11 で検証（3 つの場面）</td><td><span class="badge b-none">未</span></td></tr>
 </tbody></table></div>
 </section>

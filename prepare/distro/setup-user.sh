@@ -1,8 +1,8 @@
 #!/bin/bash
 # ビルド用 Ubuntu の既定のユーザで実行する。nvm・Node.js・AI エージェントをホームに入れる
-# 引数: $1 = build/ フォルダ（Linux 側のパス）
+# 引数: $1 = prepare/ フォルダ（Linux 側のパス）
 set -euo pipefail
-build_dir="$1"
+prepare_dir="$1"
 
 read_list() {
 	sed -e 's/\r$//' -e 's/#.*//' -e 's/[[:space:]]*$//' "$1" | grep -v '^$' || true
@@ -18,14 +18,14 @@ fi
 # nvm.sh は未定義の変数を参照するため、読み込みの間だけ -u を外す
 set +u
 . "$NVM_DIR/nvm.sh"
-node_version="$(read_list "$build_dir/node-version.txt" | head -1)"
+node_version="$(read_list "$prepare_dir/node-version.txt" | head -1)"
 echo "[user] Node.js $node_version を入れます"
 nvm install "$node_version"
 nvm alias default "$node_version"
 nvm use default
 set -u
 
-mapfile -t agents < <(read_list "$build_dir/npm-global.txt")
+mapfile -t agents < <(read_list "$prepare_dir/npm-global.txt")
 echo "[user] npm install -g: ${agents[*]}"
 npm install -g "${agents[@]}"
 npm cache clean --force

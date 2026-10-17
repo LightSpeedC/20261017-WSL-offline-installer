@@ -44,12 +44,12 @@ if (-not (Test-DistroExists)) {
 	if (-not (Test-DistroExists)) { throw "$distroName を入れられませんでした" }
 }
 
-$buildDir = ConvertTo-LinuxPath $PSScriptRoot
-Write-Host "WSL から見た build/: $buildDir"
+$prepareDir = ConvertTo-LinuxPath $PSScriptRoot
+Write-Host "WSL から見た prepare/: $prepareDir"
 
-Invoke-InDistro @('-u', 'root', '--', 'bash', "$buildDir/distro/setup-root.sh", $buildDir)
+Invoke-InDistro @('-u', 'root', '--', 'bash', "$prepareDir/distro/setup-root.sh", $prepareDir)
 # wsl.conf の変更を効かせるため、いったん止める
 wsl --terminate $distroName | Out-Host
-Invoke-InDistro @('--', 'bash', "$buildDir/distro/setup-user.sh", $buildDir)
+Invoke-InDistro @('--', 'bash', "$prepareDir/distro/setup-user.sh", $prepareDir)
 
 Write-Host "完了: $distroName の準備ができました"

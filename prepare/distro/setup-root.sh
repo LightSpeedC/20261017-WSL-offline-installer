@@ -1,8 +1,8 @@
 #!/bin/bash
 # ビルド用 Ubuntu の root で実行する。apt のパッケージを入れ、既定のユーザを wsl.conf に書く
-# 引数: $1 = build/ フォルダ（Linux 側のパス）
+# 引数: $1 = prepare/ フォルダ（Linux 側のパス）
 set -euo pipefail
-build_dir="$1"
+prepare_dir="$1"
 
 # 1 行に 1 つ。# 以降と空行、Windows の改行を読み飛ばす
 read_list() {
@@ -14,7 +14,7 @@ echo '[root] apt update / full-upgrade'
 apt-get update
 apt-get -y full-upgrade
 
-mapfile -t packages < <(read_list "$build_dir/packages.txt")
+mapfile -t packages < <(read_list "$prepare_dir/packages.txt")
 echo "[root] apt install: ${packages[*]}"
 apt-get install -y "${packages[@]}"
 apt-get -y autoremove
